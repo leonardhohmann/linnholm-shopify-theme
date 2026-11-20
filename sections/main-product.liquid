@@ -231,6 +231,15 @@
                 {%- when 'product_specs' -%}
                   {%- comment -%} LINNHOLM: Metafelder als Tabelle {%- endcomment -%}
                   {%- render 'product-specs', product: product, block: block -%}
+                {%- when 'product_faq' -%}
+                  {%- comment -%} LINNHOLM: FAQ aus Metaobjekten {%- endcomment -%}
+                  {%- assign product_faqs = product.metafields.custom.faq.value -%}
+                  {%- if product_faqs != blank -%}
+                    <div class="product-faq quick-add-hidden" {{ block.shopify_attributes }}>
+                      <h2 class="h4 product-faq__heading">{{ block.settings.heading | escape }}</h2>
+                      {%- render 'faq-list', faqs: product_faqs, id: block.id -%}
+                    </div>
+                  {%- endif -%}
                 {%- when 'quantity_selector' -%}
                   <div
                     id="Quantity-Form-{{ section.id }}"
@@ -1039,6 +1048,23 @@
           "id": "open",
           "label": "Standardmäßig aufgeklappt",
           "default": true
+        }
+      ]
+    },
+    {
+      "type": "product_faq",
+      "name": "Produkt-FAQ",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Zeigt die im Metafeld custom.faq verknüpften FAQ-Einträge inkl. FAQPage-Strukturdaten."
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Überschrift",
+          "default": "Häufige Fragen"
         }
       ]
     },

@@ -27,6 +27,8 @@
     {% endif %}
 
     {% render 'meta-tags' %}
+    {%- comment -%} LINNHOLM: Seitenpfad als strukturierte Daten {%- endcomment -%}
+    {% render 'breadcrumb-schema' %}
 
     <script type="module">
       import * as StandardEvents from 'https://cdn.shopify.com/storefront/standard-events.js';

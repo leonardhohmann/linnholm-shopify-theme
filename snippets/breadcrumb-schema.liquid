@@ -1,0 +1,76 @@
+{% doc %}
+  LINNHOLM-Anpassung: Gibt BreadcrumbList-Strukturdaten (JSON-LD) für Produkt-, Kollektions-,
+  Blogartikel- und Inhaltsseiten aus. Google zeigt damit den Seitenpfad im Suchergebnis an.
+  Bei Produkten wird die erste Kollektion als Zwischenebene verwendet.
+
+  @example
+  {% render 'breadcrumb-schema' %}
+{% enddoc %}
+
+{%- liquid
+  assign root = shop.url
+  case request.page_type
+    when 'product'
+      assign parent = product.collections | where: 'handle', 'kuechenhelfer' | first
+      unless parent
+        assign parent = product.collections | where: 'handle', 'aufbewahrung' | first
+      endunless
+      unless parent
+        assign parent = product.collections | where: 'handle', 'bad' | first
+      endunless
+      assign current_name = product.title
+      assign current_url = product.url
+    when 'collection'
+      assign current_name = collection.title
+      assign current_url = collection.url
+    when 'article'
+      assign parent_name = blog.title
+      assign parent_url = blog.url
+      assign current_name = article.title
+      assign current_url = article.url
+    when 'blog'
+      assign current_name = blog.title
+      assign current_url = blog.url
+    when 'page'
+      assign current_name = page.title
+      assign current_url = page.url
+  endcase
+-%}
+
+{%- if current_name -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Startseite",
+          "item": {{ root | append: '/' | json }}
+        },
+        {%- if parent -%}
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": {{ parent.title | json }},
+            "item": {{ root | append: parent.url | json }}
+          },
+        {%- elsif parent_name -%}
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": {{ parent_name | json }},
+            "item": {{ root | append: parent_url | json }}
+          },
+        {%- endif -%}
+        {
+          "@type": "ListItem",
+          "position": {% if parent or parent_name %}3{% else %}2{% endif %},
+          "name": {{ current_name | json }},
+          "item": {{ root | append: current_url | json }}
+        }
+      ]
+    }
+  </script>
+{%- endif -%}

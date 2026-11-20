@@ -49,6 +49,12 @@
           "type": "description",
           "settings": {}
         },
+        "product_faq": {
+          "type": "product_faq",
+          "settings": {
+            "heading": "Häufige Fragen"
+          }
+        },
         "product_specs": {
           "type": "product_specs",
           "settings": {
@@ -72,6 +78,7 @@
         "buy_buttons",
         "description",
         "product_specs",
+        "product_faq",
         "share"
       ],
       "settings": {

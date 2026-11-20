@@ -109,6 +109,23 @@
         "padding_bottom": 52
       }
     },
+    "featured_blog": {
+      "type": "featured-blog",
+      "settings": {
+        "heading": "Ratgeber",
+        "heading_size": "h1",
+        "blog": "ratgeber",
+        "post_limit": 2,
+        "columns_desktop": 2,
+        "color_scheme": "scheme-1",
+        "show_image": true,
+        "show_date": false,
+        "show_author": false,
+        "show_view_all": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "rich_text_aj4H6H": {
       "type": "rich-text",
       "blocks": {
@@ -173,6 +190,7 @@
     "image_banner",
     "brand_benefits",
     "featured_collection",
+    "featured_blog",
     "rich_text_aj4H6H"
   ]
 }
