@@ -1403,6 +1403,17 @@
     "name": "t:settings_schema.cart.name",
     "settings": [
       {
+        "type": "header",
+        "content": "Versandkosten-Hinweis (LINNHOLM)"
+      },
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Versandkostenfrei ab (EUR)",
+        "info": "Muss zur Versandrate in den Märkten passen. 0 blendet den Hinweis aus. Gilt nur für Deutschland und Österreich.",
+        "default": 49
+      },
+      {
         "type": "select",
         "id": "cart_type",
         "options": [

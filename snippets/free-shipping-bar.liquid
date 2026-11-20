@@ -1,0 +1,90 @@
+{% doc %}
+  LINNHOLM-Anpassung: Zeigt im Warenkorb, wie viel bis zum kostenlosen Versand fehlt,
+  inklusive Fortschrittsbalken. Die Schwelle kommt aus den Theme-Einstellungen
+  (Theme settings > Warenkorb > „Versandkostenfrei ab“). Angezeigt wird der Hinweis nur
+  für Länder, in denen die Gratisversand-Regel gilt (Deutschland und Österreich).
+
+  @param {string} [css_class] - Zusätzliche CSS-Klasse, z. B. für die Variante im Cart Drawer
+
+  @example
+  {% render 'free-shipping-bar' %}
+  {% render 'free-shipping-bar', css_class: 'free-shipping--drawer' %}
+{% enddoc %}
+
+{%- liquid
+  assign threshold = settings.free_shipping_threshold | times: 100
+  assign country = localization.country.iso_code
+  assign eligible_countries = 'DE,AT' | split: ','
+
+  assign show_bar = false
+  if cart.item_count > 0 and threshold > 0 and eligible_countries contains country
+    assign show_bar = true
+  endif
+
+  if show_bar
+    assign remaining = threshold | minus: cart.total_price
+    assign progress = cart.total_price | times: 100 | divided_by: threshold | at_most: 100
+  endif
+-%}
+
+{%- if show_bar -%}
+  <div class="free-shipping {{ css_class }}">
+    <p class="free-shipping__message">
+      {%- if remaining > 0 -%}
+        Noch <strong>{{ remaining | money }}</strong> bis zum kostenlosen Versand
+      {%- else -%}
+        <strong>Kostenloser Versand</strong> ist für diese Bestellung freigeschaltet.
+      {%- endif -%}
+    </p>
+    <div
+      class="free-shipping__track"
+      role="progressbar"
+      aria-label="Fortschritt bis zum kostenlosen Versand"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="{{ progress }}"
+    >
+      <span class="free-shipping__fill" style="width: {{ progress }}%;"></span>
+    </div>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .free-shipping {
+    margin: 0 0 2rem;
+    padding: 1.4rem 1.6rem;
+    border-radius: 0.6rem;
+    background: rgba(var(--color-foreground), 0.04);
+  }
+
+  .free-shipping--drawer {
+    margin: 0 1.5rem 1.5rem;
+  }
+
+  .free-shipping__message {
+    margin: 0 0 1rem;
+    font-size: 1.4rem;
+    line-height: 1.4;
+  }
+
+  .free-shipping__track {
+    height: 0.6rem;
+    border-radius: 999px;
+    background: rgba(var(--color-foreground), 0.12);
+    overflow: hidden;
+  }
+
+  .free-shipping__fill {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: rgb(var(--color-button));
+    transition: width 0.4s ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .free-shipping__fill {
+      transition: none;
+    }
+  }
+{% endstylesheet %}

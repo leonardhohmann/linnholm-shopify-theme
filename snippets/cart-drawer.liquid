@@ -74,6 +74,8 @@
           </span>
         </button>
       </div>
+      {%- comment -%} LINNHOLM: Restbetrag bis zum kostenlosen Versand {%- endcomment -%}
+      {%- render 'free-shipping-bar', css_class: 'free-shipping--drawer' -%}
       <cart-drawer-items
         view-event-payload="{{ cart | standard_event_data: 'view', context: 'dialog' | escape }}"
         view-event-trigger="manual"
