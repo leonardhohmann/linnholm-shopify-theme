@@ -1,0 +1,100 @@
+{% doc %}
+  LINNHOLM-Anpassung: Zeigt die Produkt-Metafelder (Material, Maße, Pflegehinweise, Lieferumfang)
+  als Tabelle in einem aufklappbaren Bereich der Produktseite. Leere Felder werden ausgelassen.
+
+  @param {product} product - Das Produkt, dessen Metafelder ausgegeben werden
+  @param {block} block - Der Block aus main-product (für Überschrift, Startzustand und Theme-Editor)
+
+  @example
+  {% render 'product-specs', product: product, block: block %}
+{% enddoc %}
+
+{%- liquid
+  assign specs = product.metafields.custom
+  assign has_specs = false
+  if specs.material != blank or specs.masse != blank or specs.pflegehinweise != blank or specs.lieferumfang != blank
+    assign has_specs = true
+  endif
+-%}
+
+{%- if has_specs -%}
+  <div class="product__accordion accordion quick-add-hidden product-specs" {{ block.shopify_attributes }}>
+    <details id="Details-{{ block.id }}"{% if block.settings.open %} open{% endif %}>
+      <summary>
+        <div class="summary__title">
+          {% render 'icon-accordion', icon: 'ruler' %}
+          <h2 class="h4 accordion__title">{{ block.settings.heading | escape }}</h2>
+        </div>
+        {{- 'icon-caret.svg' | inline_asset_content -}}
+      </summary>
+
+      <div class="accordion__content">
+        <table class="product-specs__table">
+          <tbody>
+            {%- if specs.material != blank -%}
+              <tr>
+                <th scope="row">Material</th>
+                <td>{{ specs.material.value | escape }}</td>
+              </tr>
+            {%- endif -%}
+
+            {%- if specs.masse != blank -%}
+              <tr>
+                <th scope="row">Maße</th>
+                <td>{{ specs.masse.value | escape | replace: '; ', '<br>' }}</td>
+              </tr>
+            {%- endif -%}
+
+            {%- if specs.pflegehinweise != blank -%}
+              <tr>
+                <th scope="row">Pflege</th>
+                <td>{{ specs.pflegehinweise.value | escape | newline_to_br }}</td>
+              </tr>
+            {%- endif -%}
+
+            {%- if specs.lieferumfang != blank -%}
+              <tr>
+                <th scope="row">Lieferumfang</th>
+                <td>{{ specs.lieferumfang.value | escape | newline_to_br }}</td>
+              </tr>
+            {%- endif -%}
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .product-specs__table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 1.4rem;
+    line-height: 1.6;
+  }
+
+  .product-specs__table th,
+  .product-specs__table td {
+    padding: 1rem 0;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.12);
+  }
+
+  .product-specs__table tr:last-child th,
+  .product-specs__table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .product-specs__table th {
+    width: 35%;
+    padding-right: 1.5rem;
+    font-weight: 600;
+    color: rgb(var(--color-foreground));
+  }
+
+  .product-specs__table td {
+    color: rgba(var(--color-foreground), 0.8);
+  }
+{% endstylesheet %}

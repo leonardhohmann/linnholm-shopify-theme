@@ -49,6 +49,13 @@
           "type": "description",
           "settings": {}
         },
+        "product_specs": {
+          "type": "product_specs",
+          "settings": {
+            "heading": "Produktdetails",
+            "open": true
+          }
+        },
         "share": {
           "type": "share",
           "settings": {
@@ -64,6 +71,7 @@
         "quantity_selector",
         "buy_buttons",
         "description",
+        "product_specs",
         "share"
       ],
       "settings": {

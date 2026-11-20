@@ -228,6 +228,9 @@
                       </div>
                     </details>
                   </div>
+                {%- when 'product_specs' -%}
+                  {%- comment -%} LINNHOLM: Metafelder als Tabelle {%- endcomment -%}
+                  {%- render 'product-specs', product: product, block: block -%}
                 {%- when 'quantity_selector' -%}
                   <div
                     id="Quantity-Form-{{ section.id }}"
@@ -1013,6 +1016,29 @@
           "id": "open_by_default",
           "label": "t:sections.disclosures.settings.open_by_default.label",
           "default": false
+        }
+      ]
+    },
+    {
+      "type": "product_specs",
+      "name": "Produktdetails",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Zeigt Material, Maße, Pflegehinweise und Lieferumfang aus den Produkt-Metafeldern custom.*. Leere Felder werden ausgeblendet."
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Überschrift",
+          "default": "Produktdetails"
+        },
+        {
+          "type": "checkbox",
+          "id": "open",
+          "label": "Standardmäßig aufgeklappt",
+          "default": true
         }
       ]
     },
