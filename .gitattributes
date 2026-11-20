@@ -1,0 +1,5 @@
+# Einheitliche Zeilenenden (LF), egal ob Windows, Shopify-Download oder Editor
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.gif binary

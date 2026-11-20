@@ -44,6 +44,7 @@
         "button"
       ],
       "settings": {
+        "image": "shopify://shop_images/photo-1708426045546-8911cfea6162.jpg",
         "image_overlay_opacity": 40,
         "image_height": "large",
         "image_behavior": "none",
