@@ -1,0 +1,239 @@
+{%- comment -%}
+  LINNHOLM-Anpassung: Eigene Section „Vorteile der Marke“.
+  Überschrift, Einleitung und beliebig viele Vorteile (Icon, Titel, Text) sind im Theme-Editor pflegbar.
+{%- endcomment -%}
+
+<section
+  class="brand-benefits color-{{ section.settings.color_scheme }} gradient"
+  style="--benefits-columns: {{ section.settings.columns_desktop }}; --benefits-padding-top: {{ section.settings.padding_top }}px; --benefits-padding-bottom: {{ section.settings.padding_bottom }}px;"
+  aria-labelledby="BrandBenefits-{{ section.id }}"
+>
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}
+      <h2 id="BrandBenefits-{{ section.id }}" class="brand-benefits__heading {{ section.settings.heading_size }}">
+        {{ section.settings.heading | escape }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.intro != blank -%}
+      <div class="brand-benefits__intro rte">{{ section.settings.intro }}</div>
+    {%- endif -%}
+
+    <ul class="brand-benefits__list" role="list">
+      {%- for block in section.blocks -%}
+        <li class="brand-benefits__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.icon != 'none' -%}
+            <div class="brand-benefits__icon" aria-hidden="true">
+              {%- render 'icon-accordion', icon: block.settings.icon -%}
+            </div>
+          {%- endif -%}
+          <h3 class="brand-benefits__title h4">{{ block.settings.title | escape }}</h3>
+          {%- if block.settings.text != blank -%}
+            <div class="brand-benefits__text rte">{{ block.settings.text }}</div>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% stylesheet %}
+  .brand-benefits {
+    padding-top: calc(var(--benefits-padding-top) * 0.75);
+    padding-bottom: calc(var(--benefits-padding-bottom) * 0.75);
+  }
+
+  @media screen and (min-width: 750px) {
+    .brand-benefits {
+      padding-top: var(--benefits-padding-top);
+      padding-bottom: var(--benefits-padding-bottom);
+    }
+  }
+
+  .brand-benefits__heading {
+    margin: 0 0 1rem;
+    text-align: center;
+  }
+
+  .brand-benefits__intro {
+    max-width: 60rem;
+    margin: 0 auto 3.5rem;
+    text-align: center;
+    color: rgba(var(--color-foreground), 0.75);
+  }
+
+  .brand-benefits__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media screen and (min-width: 750px) {
+    .brand-benefits__list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .brand-benefits__list {
+      grid-template-columns: repeat(var(--benefits-columns), 1fr);
+    }
+  }
+
+  .brand-benefits__item {
+    text-align: center;
+  }
+
+  .brand-benefits__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 5.6rem;
+    height: 5.6rem;
+    margin-bottom: 1.2rem;
+    border-radius: 50%;
+    background: rgba(var(--color-foreground), 0.06);
+    color: rgb(var(--color-button));
+  }
+
+  .brand-benefits__icon .svg-wrapper,
+  .brand-benefits__icon svg {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .brand-benefits__title {
+    margin: 0 0 0.6rem;
+  }
+
+  .brand-benefits__text {
+    font-size: 1.5rem;
+    color: rgba(var(--color-foreground), 0.75);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Vorteile der Marke",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Überschrift",
+      "default": "Warum LINNHOLM"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Größe der Überschrift",
+      "options": [
+        { "value": "h2", "label": "Klein" },
+        { "value": "h1", "label": "Mittel" },
+        { "value": "h0", "label": "Groß" }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Einleitung"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Spalten auf dem Desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Farbschema",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Abstände"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Abstand oben",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Abstand unten",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 52
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Vorteil",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "none", "label": "Kein Icon" },
+            { "value": "leaf", "label": "Blatt" },
+            { "value": "recycle", "label": "Recycling" },
+            { "value": "truck", "label": "Lieferwagen" },
+            { "value": "return", "label": "Rückgabe" },
+            { "value": "box", "label": "Paket" },
+            { "value": "check_mark", "label": "Häkchen" },
+            { "value": "washing", "label": "Waschen" },
+            { "value": "ruler", "label": "Lineal" },
+            { "value": "heart", "label": "Herz" }
+          ],
+          "default": "check_mark"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titel",
+          "default": "Vorteil"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vorteile der Marke",
+      "blocks": [
+        { "type": "benefit", "settings": { "icon": "leaf", "title": "Natürliche Materialien" } },
+        { "type": "benefit", "settings": { "icon": "check_mark", "title": "Für den Alltag gemacht" } },
+        { "type": "benefit", "settings": { "icon": "truck", "title": "Versandkostenfrei ab 49 €" } },
+        { "type": "benefit", "settings": { "icon": "washing", "title": "Leicht zu pflegen" } }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}

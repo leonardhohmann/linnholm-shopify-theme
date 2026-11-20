@@ -57,6 +57,58 @@
         "show_text_below": false
       }
     },
+    "brand_benefits": {
+      "type": "brand-benefits",
+      "blocks": {
+        "benefit_material": {
+          "type": "benefit",
+          "settings": {
+            "icon": "leaf",
+            "title": "Natürliche Materialien",
+            "text": "<p>Bambus, Holz, Glas, Leinen und Keramik statt Kunststoff, wo es sinnvoll ist.</p>"
+          }
+        },
+        "benefit_details": {
+          "type": "benefit",
+          "settings": {
+            "icon": "ruler",
+            "title": "Transparente Details",
+            "text": "<p>Material, Maße, Pflege und Lieferumfang stehen bei jedem Produkt übersichtlich in einer Tabelle.</p>"
+          }
+        },
+        "benefit_shipping": {
+          "type": "benefit",
+          "settings": {
+            "icon": "truck",
+            "title": "Versandkostenfrei ab 49 €",
+            "text": "<p>Innerhalb Deutschlands und Österreichs, Lieferung in 2–4 Werktagen.</p>"
+          }
+        },
+        "benefit_care": {
+          "type": "benefit",
+          "settings": {
+            "icon": "washing",
+            "title": "Leicht zu pflegen",
+            "text": "<p>Klare Pflegehinweise für jedes Produkt, damit es lange hält.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_material",
+        "benefit_details",
+        "benefit_shipping",
+        "benefit_care"
+      ],
+      "settings": {
+        "heading": "Warum LINNHOLM",
+        "heading_size": "h1",
+        "intro": "<p>Schlichte Haushaltswaren für Küche und Bad, die lange halten und ruhig aussehen.</p>",
+        "columns_desktop": 4,
+        "color_scheme": "scheme-1",
+        "padding_top": 52,
+        "padding_bottom": 52
+      }
+    },
     "rich_text_aj4H6H": {
       "type": "rich-text",
       "blocks": {
@@ -119,7 +171,8 @@
   },
   "order": [
     "image_banner",
-    "rich_text_aj4H6H",
-    "featured_collection"
+    "brand_benefits",
+    "featured_collection",
+    "rich_text_aj4H6H"
   ]
 }
