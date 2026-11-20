@@ -13,8 +13,20 @@
   "sections": {
     "footer": {
       "type": "footer",
+      "blocks": {
+        "text_nxXB6T": {
+          "type": "text",
+          "settings": {
+            "heading": "LINNHOLM",
+            "subtext": "<p>Fiktive Marke · Demo-Shop und Portfolio-Projekt von Leonard Hohmann. Keine echten Bestellungen.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "text_nxXB6T"
+      ],
       "settings": {
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-3",
         "newsletter_enable": true,
         "newsletter_heading": "Subscribe to our emails",
         "enable_follow_on_shop": true,
