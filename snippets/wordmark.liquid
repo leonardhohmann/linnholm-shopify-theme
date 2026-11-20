@@ -1,0 +1,45 @@
+{% doc %}
+  LINNHOLM-Anpassung: Rendert das Wortlogo aus dem Shop-Namen, solange kein Logo-Bild hochgeladen ist.
+
+  Der Markenname wird in Versalien mit weitem Buchstabenabstand ausgegeben.
+  Enthält der Shop-Name „(Demo)“, erscheint statt des Klammerzusatzes ein kleines Demo-Badge.
+
+  @example
+  {% render 'wordmark' %}
+{% enddoc %}
+
+{%- assign brand_name = shop.name | split: ' (' | first -%}
+
+<span class="wordmark">
+  <span class="wordmark__name">{{ brand_name | upcase }}</span>
+  {%- if shop.name contains '(Demo)' -%}
+    <span class="wordmark__badge">Demo</span>
+  {%- endif -%}
+</span>
+
+{% stylesheet %}
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .wordmark__name {
+    font-family: var(--font-heading-family);
+    font-size: 2.2rem;
+    letter-spacing: 0.32em;
+    margin-right: -0.32em;
+    color: rgb(var(--color-foreground));
+  }
+
+  .wordmark__badge {
+    font-family: var(--font-body-family);
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.7rem;
+    border: 1px solid rgba(var(--color-foreground), 0.35);
+    border-radius: 999px;
+    color: rgba(var(--color-foreground), 0.75);
+  }
+{% endstylesheet %}
